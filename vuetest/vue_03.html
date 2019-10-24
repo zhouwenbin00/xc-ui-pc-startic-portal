@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<body>
+<!--实现body区域显示一个传智播客名称-->
+<div id="app">
+    <!--相当于MVVM的view视图-->
+    <ul>
+        <li v-for="(a , index) in list" :key="index" v-if="index %2==0">{{a}}--{{index}}</li>
+        <li v-for="(value, key) in user">{{value}}--{{key}}</li>
+        <li v-for="(item, index) in userList" :key="item.user.username">
+            <div v-if="item.user.username=='itecsat'" style="background: #00a0e9">
+                {{index}}--{{item.user.username}}
+            </div>
+            <div v-else="">
+                {{index}}--{{item.user.username}}--{{item.user.age}}
+            </div>
+
+        </li>
+    </ul>
+</div>
+</body>
+<script>
+    /*编写MVVM的mode部分以及Vm（ViewModel）部分*/
+    const vm = new Vue({
+        el: "#app",/*vm接管了app区的管理*/
+        data: {/*mode数据*/
+            list: [1, 2, 3, 4, 5],
+            user: {username: "itecsat", age: 18},
+            userList: [{user: {username: "itecsat2", age: 18}}, {user: {username: "itecsat", age: 18}}]
+        }
+    });
+</script>
+</html>

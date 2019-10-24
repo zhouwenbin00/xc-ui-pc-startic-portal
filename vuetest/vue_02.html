@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<!--实现body区域显示一个传智播客名称-->
+<div id="app">
+    <!--{{name}}--> <!--相当于MVVM的view视图-->
+    <a v-bind:href="url"><span v-text="name"></span></a>
+
+
+    <input type="text" v-model="num1"> +
+    <input type="text" v-model="num2"> =
+    <span v-text="result"></span>
+    <!--{{Number.parseInt(num1) +Number.parseInt(num2) }}-->
+    <button v-on:click="change">计算</button>
+    <div v-bind:style="{ fontSize: size +'px'}">JAVAEE培训</div>
+
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    /*编写MVVM的mode部分以及Vm（ViewModel）部分*/
+    const vm = new Vue({
+        el: "#app",/*vm接管了app区的管理*/
+        data: {/*mode数据*/
+            name: "传智播客",
+            num1: 0,
+            num2: 0,
+            size: 20,
+            result: 0,
+            url:"https://www.baidu.com"
+        },
+        methods: {
+            change: function () {
+                this.result = Number.parseInt(this.num1) + Number.parseInt(this.num2)
+                // alert("计算结果：" + this.result)
+            }
+        }
+    });
+</script>
+</html>
