@@ -11,8 +11,6 @@
     <link rel="stylesheet" href="/css/page-header.css" />
     <link rel="stylesheet" href="/css/el/index.css" />
     <link rel="stylesheet" href="/css/main.css" />
-    <script src="/css/el/index.js"></script>
-    <script src="/js/vue/vue.min.js"></script>
     <script src="/js/jwt-decode/jwt-decode.min.js"></script>
     <script src="/js/base64.min.js"></script>
     <script src="/js/axios/axios.min.js"></script>
@@ -20,7 +18,8 @@
     <script src="/js/util.js"></script>
     <script src="/js/public.js"></script>
     <script src="/js/login.js"></script>
-
+    <script src="/js/vue/vue.min.js"></script>
+    <script src="/css/el/index.js"></script>
 
 </head>
 <body >
@@ -46,7 +45,7 @@
                     <!-- 登录 -->
                     <!--<a href="#" class="personal"><span class="personalIco"></span>消息</a>-->
                     <span v-if="logined == true">欢迎{{this.user.username}}</span>
-                    <a href="javascript:;" @click="logout" v-if="logined == true">退出</a>
+                    <a href="javascript:;" @click="logout0" v-if="logined == true">退出</a>
                     <a href="http://ucenter.demo.com/" class="personal" target="_blank">我的学习</a>
                     <a href="javascript:;" @click="showlogin" v-if="logined == false">登陆&nbsp;|&nbsp;注册</a>
                     <a href="http://teacher.demo.com/" class="personal" target="_blank">教学提供方</a>
@@ -98,11 +97,11 @@
                     window.location = "/course/search?keyword="+keyword
                 }
             },
-           logout: function () {
+            logout0() {
                 this.$confirm('确认退出吗?', '提示', {
                 }).then(() => {
                     //跳转到统一登陆
-                    window.location = "http://ucenter.xuecheng.com/#/logout"
+                    window.location = "http://ucenter.demo.com/#/logout"
                 }).catch(() => {
 
                 });
@@ -112,7 +111,7 @@
                 let activeUser= getActiveUser();
                 //取出cookie中的令牌
                 let uid = getCookie("uid")
-                //console.log(activeUser)
+                console.log(uid)
                 if(activeUser && uid && uid == activeUser.uid){
                     this.logined = true
                     this.user = activeUser;
@@ -138,7 +137,7 @@
                 this.$refs[formName].resetFields();
             },
             showlogin: function(){
-                window.location = "http://ucenter.xuecheng.com/#/login?returnUrl="+ Base64.encode(window.location)
+                window.location = "http://ucenter.demo.com/#/login?returnUrl="+ Base64.encode(window.location)
             }
         },
        created() {

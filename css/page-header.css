@@ -32,9 +32,11 @@ header .navbar .starch {
     min-width: 326px;
     margin-right: 5%;
 }
+
 header .navbar .starch div {
-    float:left;
+    float: left;
 }
+
 header .navbar .starch .searchword {
     margin-top: 7px;
     padding: 5px 0 0 4px;
@@ -46,10 +48,12 @@ header .navbar .starch .searchword {
     background: #00a4ff;
     cursor: pointer;
 }
-header .navbar .starch .searchword a{
+
+header .navbar .starch .searchword a {
     color: #fff;
     cursor: pointer;
 }
+
 header .navbar .sign-in {
     float: right;
 }

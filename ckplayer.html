@@ -27,7 +27,7 @@
         loop: true, //播放结束是否循环播放
         //autoplay: true, //是否自动播放
         //duration: 500, //设置视频总时间
-       // cktrack: 'material/srt.srt', //字幕文件
+        // cktrack: 'material/srt.srt', //字幕文件
         //poster: 'material/poster.jpg', //封面图片
         preview: { //预览图片
             file: ['material/mydream_en1800_1010_01.png', 'material/mydream_en1800_1010_02.png'],
@@ -70,13 +70,14 @@
         //mobileCkControls:true,//是否在移动端（包括ios）环境中显示控制栏
         //live:true,//是否是直播视频，true=直播，false=点播
         video: [
-/*            ['http://img.ksbbs.com/asset/Mon_1703/05cacb4e02f9d9e.mp4', 'video/mp4', '中文标清', 0],
-            ['http://img.ksbbs.com/asset/Mon_1703/d0897b4e9ddd9a5.mp4', 'video/mp4', '中文高清', 0],
-            ['http://img.ksbbs.com/asset/Mon_1703/eb048d7839442d0.mp4', 'video/mp4', '英文高清', 10],*/
-            ['http://video.xuecheng.com/video/lucene.m3u8', 'video/m3u8', '超清', 0]
+            /*            ['http://img.ksbbs.com/asset/Mon_1703/05cacb4e02f9d9e.mp4', 'video/mp4', '中文标清', 0],
+                        ['http://img.ksbbs.com/asset/Mon_1703/d0897b4e9ddd9a5.mp4', 'video/mp4', '中文高清', 0],
+                        ['http://img.ksbbs.com/asset/Mon_1703/eb048d7839442d0.mp4', 'video/mp4', '英文高清', 10],*/
+            ['http://video.demo.com/video/lucene.m3u8', 'video/m3u8', '超清', 0]
         ]
     };
     var player = new ckplayer(videoObject);
+
     function loadedHandler() {
         player.addListener('error', errorHandler); //监听视频加载出错
         player.addListener('loadedmetadata', loadedMetaDataHandler); //监听元数据
@@ -99,6 +100,7 @@
         player.addListener('definitionChange', definitionChangeHandler); //监听清晰度切换事件
         player.addListener('speed', speedHandler); //监听加载速度
     }
+
     function errorHandler() {
         console.log('出错')
         changeText('.playerstate', '状态：视频加载错误，停止执行其它动作，等待其它操作');
@@ -109,7 +111,7 @@
         //console.log(metaData)
         var html = ''
         //console.log(metaData);
-        if(parseInt(metaData['videoWidth']) > 0) {
+        if (parseInt(metaData['videoWidth']) > 0) {
             changeText('.playerstate', '状态：获取到元数据信息，如果数据错误，可以使用延迟获取');
             html += '总时间：' + metaData['duration'] + '秒，';
             html += '音量：' + metaData['volume'] + '（范围0-1），';
@@ -126,10 +128,11 @@
         }
         changeText('.metadata', html);
     }
+
     function playHandler() {
         //player.animateResume();//继续播放所有弹幕
         changeText('.playstate', getHtml('.playstate') + ' 播放');
-        window.setTimeout(function() {
+        window.setTimeout(function () {
             loadedMetaDataHandler();
         }, 1000);
         loadedMetaDataHandler();
@@ -165,15 +168,17 @@
     function volumeChangeHandler(vol) {
         changeText('.volumechangestate', '当前音量：' + vol);
     }
+
     function speedHandler(n) {
         changeText('.speed', '当前加载速率：' + n);
     }
+
     function screenshotHandler(obj) {
         changeText('.screenshot', '图片名称：' + obj['name'] + ',截图对象：' + obj['object'] + ',是否用户保存：' + obj['save'] + ',图片：<img src="' + obj['base64'] + '">');
     }
 
     function fullHandler(b) {
-        if(b) {
+        if (b) {
             html = ' 全屏';
         } else {
             html = ' 否';
@@ -193,45 +198,50 @@
     function frontAdHandler(status) {
         changeText('.frontad', getHtml('.frontad') + ' ' + status);
     }
+
     var zoomNow = 1;
 
     function wheelHandler(n) {
-        if(n > 0) {
-            if(zoomNow < 5) {
+        if (n > 0) {
+            if (zoomNow < 5) {
                 zoomNow += 0.1;
             }
         } else {
-            if(zoomNow > 0) {
+            if (zoomNow > 0) {
                 zoomNow -= 0.1;
             }
         }
         player.videoZoom(zoomNow);//支持鼠标滚轮控制放大缩小
     }
-    function controlBarHandler(show){
-        if(show) {
+
+    function controlBarHandler(show) {
+        if (show) {
             html = ' 显示';
         } else {
             html = ' 隐藏';
         }
         changeText('.controlBar', getHtml('.controlBar') + html);
     }
-    function clickEventHandler(eve){
-        changeText('.clickEvent', getHtml('.clickEvent') + ' '+eve);
+
+    function clickEventHandler(eve) {
+        changeText('.clickEvent', getHtml('.clickEvent') + ' ' + eve);
     }
-    function definitionChangeHandler(num){
-        changeText('.definitionChange', getHtml('.definitionChange') + ',切换清晰度编号'+num);
+
+    function definitionChangeHandler(num) {
+        changeText('.definitionChange', getHtml('.definitionChange') + ',切换清晰度编号' + num);
     }
+
     var videoChangeNum = 0;
 
     function seekTime() {
         var time = parseInt(player.getByElement('.seektime').value);
         var metaData = player.getMetaDate();
         var duration = metaData['duration'];
-        if(time < 0) {
+        if (time < 0) {
             alert('请填写大于0的数字');
             return;
         }
-        if(time > duration) {
+        if (time > duration) {
             alert('请填写小于' + duration + '的数字');
             return;
         }
@@ -241,11 +251,11 @@
     function changeVolume() {
         var volume = player.getByElement('.changevolume').value;
         volume = Math.floor(volume * 100) / 100
-        if(volume < 0) {
+        if (volume < 0) {
             alert('请填写大于0的数字');
             return;
         }
-        if(volume > 1) {
+        if (volume > 1) {
             alert('请填写小于1的数字');
             return;
         }
@@ -279,7 +289,7 @@
     }
 
     function changeVideo(videoUrl) {
-        if(player == null) {
+        if (player == null) {
             return;
         }
 
@@ -292,8 +302,8 @@
         }
         //判断是需要重新加载播放器还是直接换新地址
 
-        if(player.playerType == 'html5video') {
-            if(player.getFileExt(videoUrl) == '.flv' || player.getFileExt(videoUrl) == '.m3u8' || player.getFileExt(videoUrl) == '.f4v' || videoUrl.substr(0, 4) == 'rtmp') {
+        if (player.playerType == 'html5video') {
+            if (player.getFileExt(videoUrl) == '.flv' || player.getFileExt(videoUrl) == '.m3u8' || player.getFileExt(videoUrl) == '.f4v' || videoUrl.substr(0, 4) == 'rtmp') {
                 player.removeChild();
 
                 player = null;
@@ -303,7 +313,7 @@
                 player.newVideo(newVideoObject);
             }
         } else {
-            if(player.getFileExt(videoUrl) == '.mp4' || player.getFileExt(videoUrl) == '.webm' || player.getFileExt(videoUrl) == '.ogg') {
+            if (player.getFileExt(videoUrl) == '.mp4' || player.getFileExt(videoUrl) == '.webm' || player.getFileExt(videoUrl) == '.ogg') {
                 player = null;
                 player = new ckplayer();
                 player.embed(newVideoObject);
@@ -312,9 +322,10 @@
             }
         }
     }
+
     var elementTemp = null; //保存元件
     function newElement() {
-        if(elementTemp != null) {
+        if (elementTemp != null) {
             alert('为了演示的简单性，本实例只能建立一个元件');
             return;
         }
@@ -367,7 +378,7 @@
     }
 
     function deleteElement() {
-        if(elementTemp != null) {
+        if (elementTemp != null) {
             player.deleteElement(elementTemp);
             elementTemp = null;
         } else {
@@ -438,7 +449,7 @@
     }
 
     function deleteChild(ele) {
-        if(player) {
+        if (player) {
             player.deleteElement(ele);
         }
     }
@@ -450,6 +461,7 @@
     function getHtml(div) {
         return player.getByElement(div).innerHTML;
     }
+
     var zoom = 1;
 </script>
 <p>
@@ -526,12 +538,14 @@
     <button type="button" onclick="player.videoHue(0)">恢复色相(仅flashplayer)</button>
 </p>
 <p>
-    <input type="text" class="videourl" style="width: 500px;" placeholder="视频地址" value="http://www.flashls.org/playlists/test_001/stream_1000k_48k_640x360.m3u8">
+    <input type="text" class="videourl" style="width: 500px;" placeholder="视频地址"
+           value="http://www.flashls.org/playlists/test_001/stream_1000k_48k_640x360.m3u8">
 
     <button type="button" onclick="newVideo()">播放</button>
 </p>
 <p>
-    <input type="text" class="videourl2" style="width: 500px;" placeholder="视频地址" value="http://img.ksbbs.com/asset/Mon_1703/d30e02a5626c066.mp4">
+    <input type="text" class="videourl2" style="width: 500px;" placeholder="视频地址"
+           value="http://img.ksbbs.com/asset/Mon_1703/d30e02a5626c066.mp4">
 
     <button type="button" onclick="newVideo2()">播放</button>
 
@@ -539,20 +553,20 @@
 <p class="metadata"></p>
 <p>单独监听功能：</p>
 <p class="handler">
-    <span class="duration"></span><br />
-    <span class="playstate">播放状态：</span><br />
-    <span class="seekstate">跳转状态:无</span><br />
-    <span class="bufferstate">缓冲:100</span><br />
-    <span class="speed">加载速率：0</span><br />
-    <span class="volumechangestate">当前音量：0.8</span><br />
-    <span class="fullstate">是否全屏：否</span><br />
-    <span class="controlBar">控制栏：显示</span><br />
-    <span class="endedstate">还未结束</span><br />
-    <span class="currenttimestate">当前播放时间（秒）：0</span><br />
-    <span class="frontad">前置广告状态：</span><br />
-    <span class="mouse">鼠标位置</span><br />
-    <span class="definitionChange">切换清晰度：</span><br />
-    <span class="clickEvent">点击监听：</span><br />
+    <span class="duration"></span><br/>
+    <span class="playstate">播放状态：</span><br/>
+    <span class="seekstate">跳转状态:无</span><br/>
+    <span class="bufferstate">缓冲:100</span><br/>
+    <span class="speed">加载速率：0</span><br/>
+    <span class="volumechangestate">当前音量：0.8</span><br/>
+    <span class="fullstate">是否全屏：否</span><br/>
+    <span class="controlBar">控制栏：显示</span><br/>
+    <span class="endedstate">还未结束</span><br/>
+    <span class="currenttimestate">当前播放时间（秒）：0</span><br/>
+    <span class="frontad">前置广告状态：</span><br/>
+    <span class="mouse">鼠标位置</span><br/>
+    <span class="definitionChange">切换清晰度：</span><br/>
+    <span class="clickEvent">点击监听：</span><br/>
     <span class="screenshot">监听截图功能（截图功能需要视频权限）</span>
 
 </p>

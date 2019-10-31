@@ -11,11 +11,11 @@ const vm = new Vue({
         num2: 0,
         size: 20,
         result: 0,
-        url:"https://www.baidu.com"
+        url: "https://www.baidu.com"
     },
     methods: {
         change: function () {
-            this.result = add(Number.parseInt(this.num1) , Number.parseInt(this.num2))
+            this.result = add(Number.parseInt(this.num1), Number.parseInt(this.num2))
             // alert("计算结果：" + this.result)
         }
     }
